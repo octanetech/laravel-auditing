@@ -220,8 +220,8 @@ trait AuditingTrait
     {
         // Log data
         $logAuditing = [
-            'old_value'   => $this->json_encode($log['old_value']),
-            'new_value'   => $this->json_encode($log['new_value']),
+            'old_value'   => json_encode($log['old_value']),
+            'new_value'   => json_encode($log['new_value']),
             'owner_type'  => $this->getMorphClass(),
             'owner_id'    => $this->getKey(),
             'user_id'     => $this->getLoggedInUserId(),
