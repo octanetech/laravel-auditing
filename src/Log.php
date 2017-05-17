@@ -266,6 +266,24 @@ class Log extends Model
      */
     public function getActualClassNameForMorph($class)
     {
-        return array_get(Relation::morphMap(), $class, $class);
+        return array_get(static::buildMorphMapFromModels(), $class, $class);
+    }
+    
+
+    /**
+     * Builds a table-keyed array from model class names.
+     *
+     * @param  string[]|null  $models
+     * @return array|null
+     */
+    protected static function buildMorphMapFromModels(array $models = null)
+    {
+        if (is_null($models) || Arr::isAssoc($models)) {
+            return $models;
+        }
+        $tables = array_map(function ($model) {
+            return (new $model)->getTable();
+        }, $models);
+        return array_combine($tables, $models);
     }
 }
