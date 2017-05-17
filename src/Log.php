@@ -4,6 +4,7 @@ namespace OwenIt\Auditing;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Database\Eloquent\Relations\Relation;
 
 class Log extends Model
 {
@@ -255,5 +256,16 @@ class Log extends Model
         }
 
         return str_replace('\\', '', Str::snake(Str::plural(class_basename($this))));
+    }
+    
+    /**
+     * Retrieve the fully qualified class name from a slug.
+     *
+     * @param  string  $class
+     * @return string
+     */
+    public function getActualClassNameForMorph($class)
+    {
+        return array_get(Relation::morphMap(), $class, $class);
     }
 }
